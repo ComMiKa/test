@@ -1,0 +1,147 @@
+FORMAT: 1A
+#CK API
+
+#Root [/]
+##Main Test [GET]
++ Response 200 (application/json)
+
+        { status:"ok"}
+
+#Authentication [/auth/]
+##Log in [POST]
++ Request (application/json)
+
+        { "usernameright": "passwordright/token"}
+
++ Response 200 (application/json)
+
+        {"message": "succeed","newurl": "/dashboard" }    
+        
++ Request (application/json)
+
+         { "username": "password/token" }
+
++ Response 401 (application/json)
+
+        { "message": "failed/access denied" }
+        
+#Download [/download]
+##Get URL [POST]
++ Request (application/json)
+    
+        {
+            "url_main": "http://link1.com/mainfile.def",
+            "url_alternative": [ 
+            "http://link1.com/alt_file1", 
+            "http://link1.com/alt_file2"" ] ,
+            "rename": "main_file_.abc", 
+            "dir" : "C:/abc/music",
+            "category": "music", 
+            "speed_limit": {
+                "num_val" : "20", 
+                "unit" : "%". 
+                }
+            "proxy" : [  
+                {
+                    "addr" : "127.0.0.1",
+                    "port" : "8080",
+                    "protocol": "ftp",
+                }
+                        ] ,
+            "vid_play": "true", 
+        
+        }
+
++ Response 200
+
+        {
+            "status": "done" 
+            "update_ele" : "dl_info" 
+        }
+
+#Get Link Info [/linkinfo]
+## Get Link [GET]
++ Headers 
+
+        cookie: text
+        Accept-Charset: utf-8
+        Connection: keep-alive
+
++ Request (application/json)
+
+        { "url": "http://a.com/b.zip" }
+
++ Response 200 (application/json)
+
+        {"name":"baitap.zip", "size":"1GB"}
+
+#Refresh [/refresh]
+## Get new info [GET]
++ Header 
+
+        cookie: text
+        
++ Request (application/json)
+
+        {  }
+
++ Response 200 (application/json)
+
+        {
+                "time ": "01:00:00+07", 
+                [
+                        "id": "1", 
+                        "downloaded": "100kb", 
+                        "size": "1024MB", 
+                        "URL": "http://abc.com", 
+                        "est" :"1m2s" ,
+                        "status" : "down", 
+                        "speed": "200Kbps",
+                        thread : [
+                                "thread1": {
+                                        "start_pos":"4%", 
+                                        "curr_pos":"29%", 
+                                        "status":"down",
+                                                        },
+                                "thread2": {,,,},
+                                ] ,
+                        info : {
+                                "altURL": ["url1": "a.com", "url2": "b.com"] 
+                                "filename" : "abc.zip", 
+                                "cus_filename" : "abc.zip",
+                                "category": "Documents",
+                                "path": "D:\abc.zip",
+                                "file_proxied" : "none", 
+                        }
+                ],
+                ["id": "2",     ...],   ...
+        }
+
+#Update download info [/update_info]
+##Update info [GET]
++ Header
+
+        cookie: text
+        
++ Request (application/json)
+
+        {
+            "id": "1",
+            "cus_filename": 'newname,zip",
+            "limit_speed": "",
+            "global_control":"start"  
+            "local_control":"start"  
+            "cus_cataloge":"Video",
+            "proxy" : [],
+            "total_connection": "20",
+
+         }
+
+        
++ Response 200 (application/json)
+
+        {
+            "status": "saved", 
+            "action" : "",
+        }
+
