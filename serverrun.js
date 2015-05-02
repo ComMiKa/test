@@ -14,15 +14,15 @@ var dir = process.env.OPENSHIFT_REPO_DIR,
 	port = process.env.OPENSHIFT_NODEJS_PORT,
 	host = process.env.OPENSHIFT_NODEJS_IP;
 
-
+var comb = host+ ':' + port;
 configuration = {
   'blueprintPath': "./work.api",
   'options': {
-    "port" : port
+    "port" : comb
   }
-}
+};
 
-var options = 
 
-apiMock = new ApiMock(configuration);
+
+var apiMock = new ApiMock(configuration);
 apiMock.run();
